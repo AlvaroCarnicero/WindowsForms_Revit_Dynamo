@@ -427,26 +427,106 @@ class MyTextBox(TextBox):
             self.textBox.ScrollBars = scrollBars
 
 class MyWindow(Form):
-    '''Creates a Graphic User Interface.'''
-    
     def __init__(self, windowTitle, dimX, dimY):
-        '''Instantiates the window object.
-        
-        windowTitle: The title of the new window.  [Str]
-        dimX: The dimension in the X axis in pixels.  [Int]
-        dimY: The dimension in the Y axis in pixels.  [Int]'''
-        
         self.Text = windowTitle
         self.ClientSize = Size(dimX, dimY)
-
         self.FormBorderStyle = FormBorderStyle.FixedSingle
-        self.BackColor = Color.FromArgb(235,235,235)
+        self.BackColor = Color.FromArgb(235, 235, 235)
         self.CenterToScreen()
-        self.BringToFront()
         
-        self.controlInfo = {'TextBox': {}, 'ComboBox': {}, 'CheckBox': {}, 'RadioButton': {}}
+        # Inicializar controlInfo
+        self.controlInfo = {
+            'TextBox': {},
+            'ComboBox': {},
+            'CheckBox': {},
+            'RadioButton': {}
+        }
 
+    # Método para capturar los datos de todos los controles
+    def buttonPressed_CloseWindow(self, sender, args):
+        '''Captura los datos de los controles al cerrar la ventana.'''
         
+        for control in self.Controls:
+            if isinstance(control, TextBox):
+                self.controlInfo['TextBox'][control.Name] = control.Text
+            elif isinstance(control, ComboBox):
+                self.controlInfo['ComboBox'][control.Name] = control.SelectedItem
+            elif isinstance(control, CheckBox):
+                self.controlInfo['CheckBox'][control.Name] = control.Checked
+            elif isinstance(control, RadioButton):
+                self.controlInfo['RadioButton'][control.Name] = control.Checked
+            elif isinstance(control, GroupBox):
+                group_name = control.Name
+                if group_name not in self.controlInfo['RadioButton']:
+                    self.controlInfo['RadioButton'][group_name] = {}
+                
+                for sub_control in control.Controls:
+                    if isinstance(sub_control, RadioButton):
+                        self.controlInfo['RadioButton'][group_name][sub_control.Name] = sub_control.Checked
+
+        self.Close()
+
+    # Método para cancelar la operación
+    def buttonPressed_Cancel(self, sender, args):
+        '''Cierra la ventana y deja los diccionarios vacíos.'''
+        
+        # Vaciar todos los diccionarios en controlInfo
+        self.controlInfo = {
+            'TextBox': {},
+            'ComboBox': {},
+            'CheckBox': {},
+            'RadioButton': {}
+        }
+        self.Close()
+    
+    # Método para agregar un botón "Aceptar" con tamaño personalizado
+    def add_accept_button(self, x, y, text="Aceptar", font=None, width=100, height=30):
+        boton_aceptar = Button()
+        boton_aceptar.Text = text
+        boton_aceptar.Location = Point(x, y)
+        boton_aceptar.Size = Size(width, height)  # Definir tamaño personalizado
+        boton_aceptar.Font = font
+        boton_aceptar.Click += self.buttonPressed_CloseWindow
+        self.Controls.Add(boton_aceptar)
+        return boton_aceptar
+
+    # Método para agregar un botón "Cancelar" con tamaño personalizado
+    def add_cancel_button(self, x, y, text="Cancelar", font=None, width=100, height=30):
+        boton_cancelar = Button()
+        boton_cancelar.Text = text
+        boton_cancelar.Location = Point(x, y)
+        boton_cancelar.Size = Size(width, height)  # Definir tamaño personalizado
+        boton_cancelar.Font = font
+        boton_cancelar.Click += self.buttonPressed_Cancel
+        self.Controls.Add(boton_cancelar)
+        return boton_cancelar
+  
+        
+    # def buttonPressed_CloseWindow(self, sender, args):
+    #     '''Handles the event when the button is pressed.'''
+        
+    #     for control in self.Controls:
+    #         if type(control) == TextBox:
+    #             self.controlInfo['TextBox'][control.Name] = control.Text
+    #         elif type(control) == ComboBox:
+    #             self.controlInfo['ComboBox'][control.Name] = control.SelectedItem
+    #         elif type(control) == CheckBox:
+    #             self.controlInfo['CheckBox'][control.Name] = control.Checked
+                
+    #         # # Capturar los datos de MyRadioButton dentro de los GroupBox
+    #         # elif isinstance(control, MyGroupBox):
+    #         #     for rb in control.groupBox.Controls:
+    #         #         if isinstance(rb, MyRadioButton):
+    #         #             self.controlInfo['RadioButton'][rb.Name] = control.Checked
+                
+    #         elif type(control) == RadioButton:
+    #             self.controlInfo['RadioButton'][control.Name] = control.Checked
+    #         # elif type(control) == GroupBox:
+    #         #     self.controlInfo['GroupBox'][control.Name] = control.Checked
+    #         else:
+    #             pass
+    #     self.Close()
+
     def addImage(self, path, dimX, dimY, distX, distY):
         '''Adds an image to the window.
         
@@ -480,24 +560,6 @@ class MyWindow(Form):
         self.AllowTransparency = boolean
         if self.AllowTransparency == True:
             self.Opacity = value
-        
-    def buttonPressed_CloseWindow(self, sender, args):
-        '''Handles the event when the button is pressed.'''
-        
-        for control in self.Controls:
-            if type(control) == TextBox:
-                self.controlInfo['TextBox'][control.Name] = control.Text
-            elif type(control) == ComboBox:
-                self.controlInfo['ComboBox'][control.Name] = control.SelectedItem
-            elif type(control) == CheckBox:
-                self.controlInfo['CheckBox'][control.Name] = control.Checked
-            elif type(control) == RadioButton:
-                self.controlInfo['RadioButton'][control.Name] = control.Checked
-            # elif type(control) == GroupBox:
-            #     self.controlInfo['GroupBox'][control.Name] = control.Checked
-            else:
-                pass
-        self.Close()
 
     def run(self):
         '''Shows the window.'''
