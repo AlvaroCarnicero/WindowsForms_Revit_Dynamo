@@ -1,5 +1,26 @@
 #-*- coding: utf-8 -*-
 #______________________________________________________________________________________________________
+"""
+241101 últimos 7 días: se acumulan las hora de trabajo de varios archivos en los que se ha trabajado sobre este tema
+5 hrs 6 mins
+3 hrs 18 mins
+1 hr 47 mins
+1 hr 41 mins
+1 hr 5 mins
+1 hr 3 mins
+34 mins
+32 mins
+30 mins
+27 mins
+23 mins
+11 mins
+2 mins
+6 min
+Suma de todos los tiempos: 15 hrs 47 mins
+241115 ultimos 7 días: 3 hrs 29 mins
+
+
+"""
 
 import os
 import sys
@@ -23,36 +44,10 @@ sys.path.append(directorio_dynamo)
 
 # endregion
 
-#* FUNIONES LOCALES
-# region
-# def windowsform_ejecutar_y_extraer(ventana):
-# 	"""
-# 	Uso: Ejecutar la ventana y extraer la información de los controles en dos lista, una de variables y otra de valores.
-# 	Entrada: ventana (MyWindow) - Ventana con los controles a extraer. Nombre por defecto: win
-# 	Salida: Dos listas, una con las variables de los controles y otra con los valores de los inputs
-# 	"""
-#     # Ejecutar la ventana
-# 	ventana.run()
-# 	# Extraer la información de los controles
-# 	inputs = ventana.controlInfo
-
-# 	# Devolver la información de los controles de cada uno de los diccionarios en una lista
-# 	variables, user_inputs = [], []
-# 	for key, value in inputs.items():
-# 		# comprobar que value es un diccionario
-# 		if isinstance(value, dict):
-# 			for k, v in value.items():
-# 				variables.append(k)
-# 				user_inputs.append(v)
-# 	return inputs, variables, user_inputs
-
-# endregion
-
-
-
 # Importar las clases necesarias de la plantilla
 from Winforms_Template import * #MyWindow, MyLabel, MyTextBox, MyCheckBox, MyComboBox, MyGroupBox, MyRadioButton, MyButton, font_1
 
+# Crear la ventana principal
 # Crear la ventana principal
 win = MyWindow("Ventana con Ejemplos de Inputs", 1000, 1000)
 
@@ -117,21 +112,18 @@ checkbox.chSize(500, 30)
 combo = MyComboBox(win, "comboOpciones", 20, 450, "Seleccione una opción:", font_1, ["Opción 1", "Opción 2", "Opción 3"])
 combo.chSize(500, 30)
 
+# meter button
+boton = MySelectButton(win, "seleccionarElementos", 150, 550, "Seleccionar elementos", font_1)
+
+
 # Crear los botones "Aceptar" y "Cancelar" con tamaños personalizados
-win.add_accept_button(50, 550, "Aceptar", font_1, width=120, height=40)
-win.add_cancel_button(300, 550, "Cancelar", font_1, width=120, height=40)
+win.add_accept_button(50, 900, "Aceptar", font_1, width=120, height=40)
+win.add_cancel_button(300, 900, "Cancelar", font_1, width=120, height=40)
 
 # # Establecer el ícono en la parte inferior de la ventana utilizando un enlace de imagen
 imagePath = os.path.join(directorio_dynamo, 'image 512px.png')
 win.addImage( imagePath, 512, 512, 450, 0)
 
-
-# # Ejecutar la ventana
-# win.run()
-# inputs = win.controlInfo
-# result = windowsform_ejecutar_y_extraer(inputs)
-# # Ahora `result` contiene el diccionario con los valores y puedes usarlo como una variable
-# OUT = inputs, result
 
 OUT = windowsform_ejecutar_y_extraer(win)
 
