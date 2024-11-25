@@ -25,26 +25,26 @@ sys.path.append(directorio_dynamo)
 
 #* FUNIONES LOCALES
 # region
-def windowsform_ejecutar_y_extraer(ventana):
-	"""
-	Uso: Ejecutar la ventana y extraer la información de los controles en dos lista, una de variables y otra de valores.
-	Entrada: ventana (MyWindow) - Ventana con los controles a extraer. Nombre por defecto: win
-	Salida: Dos listas, una con las variables de los controles y otra con los valores de los inputs
-	"""
-    # Ejecutar la ventana
-	ventana.run()
-	# Extraer la información de los controles
-	inputs = ventana.controlInfo
+# def windowsform_ejecutar_y_extraer(ventana):
+# 	"""
+# 	Uso: Ejecutar la ventana y extraer la información de los controles en dos lista, una de variables y otra de valores.
+# 	Entrada: ventana (MyWindow) - Ventana con los controles a extraer. Nombre por defecto: win
+# 	Salida: Dos listas, una con las variables de los controles y otra con los valores de los inputs
+# 	"""
+#     # Ejecutar la ventana
+# 	ventana.run()
+# 	# Extraer la información de los controles
+# 	inputs = ventana.controlInfo
 
-	# Devolver la información de los controles de cada uno de los diccionarios en una lista
-	variables, user_inputs = [], []
-	for key, value in inputs.items():
-		# comprobar que value es un diccionario
-		if isinstance(value, dict):
-			for k, v in value.items():
-				variables.append(k)
-				user_inputs.append(v)
-	return inputs, variables, user_inputs
+# 	# Devolver la información de los controles de cada uno de los diccionarios en una lista
+# 	variables, user_inputs = [], []
+# 	for key, value in inputs.items():
+# 		# comprobar que value es un diccionario
+# 		if isinstance(value, dict):
+# 			for k, v in value.items():
+# 				variables.append(k)
+# 				user_inputs.append(v)
+# 	return inputs, variables, user_inputs
 
 # endregion
 

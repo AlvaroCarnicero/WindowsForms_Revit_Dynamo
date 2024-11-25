@@ -1,9 +1,52 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 # PLANTILLA PYTHON para WINDOWS FORMS
-# Ultima edicion de esta plantilla 241029
+# Ultima edicion de esta plantilla 241125
 
+# region BIBLIOTECAS ___________________________________________
+#from re import T #da error, que T??? 
 import clr
+import System
+# from System import Array
+# from System.Collections.Generic import * 
+# from System.Collections.Generic import List as netList # Para crear IList
+
+# # Dynamo Core_______________________________________
+# clr.AddReference('Protogeometry') 
+# from Autodesk.DesignScript.Geometry import *
+
+# clr.AddReference('DSCoreNodes')
+# import DSCore
+# from DSCore import *
+
+# # Dynamo Revit________________________________________
+# clr.AddReference('RevitNodes') 
+# import Revit
+# clr.ImportExtensions(Revit.Elements) 
+# clr.ImportExtensions(Revit.GeometryConversion) 
+
+clr.AddReference('RevitAPI') # Agrega las clases que se encuentran en el archivo dll de la API de Revit
+import Autodesk
+from Autodesk.Revit.DB import *
+# import Autodesk.Revit.DB as DB
+
+clr.AddReference('RevitAPIUI') 
+import Autodesk
+from Autodesk.Revit.UI import *
+from Autodesk.Revit.UI.Selection import *
+
+clr.AddReference('RevitServices') # Permite manejar documentos y modificarlos
+import RevitServices 
+from RevitServices.Persistence import DocumentManager # Permite acceder al documento del modelo, para hacer collector
+
+doc = DocumentManager.Instance.CurrentDBDocument
+app = DocumentManager.Instance.CurrentUIApplication.Application 
+uiapp = DocumentManager.Instance.CurrentUIApplication
+uidoc = uiapp.ActiveUIDocument 
+
+
+# endregion
+
 
 from System.Drawing import Size, Color, Icon, Point, Font, FontStyle, FontFamily, GraphicsUnit, ContentAlignment
 from System.Windows.Forms import Application, Form, PictureBox, FormBorderStyle, Label, BorderStyle, FlatStyle, TextBox, HorizontalAlignment, ScrollBars, Button, ComboBox, ComboBoxStyle, CheckBox, GroupBox, RadioButton
@@ -44,6 +87,7 @@ scrollBars =    {   'Horizontal': ScrollBars.Horizontal,
 #endregion
 # ----------------------------------------------------------------------------- # CLASSES
 
+# region MyButton
 class MyButton(Button):
     '''Creates a button.'''
     
@@ -106,7 +150,9 @@ class MyButton(Button):
         blue: Range of brightness of Blue colour bewteen 0-255.  [Int]'''
         
         self.button.ForeColor = Color.FromArgb(red, green, blue)
+# endregion
 
+# region MyCheckBox
 class MyCheckBox(CheckBox):
     '''Creates a check box.'''
     
@@ -154,7 +200,9 @@ class MyCheckBox(CheckBox):
         
         self.checkBox.AutoSize = False
         self.checkBox.SetClientSizeCore(dimX, dimY) 
+# endregion
 
+# region MyComboBox
 class MyComboBox(ComboBox):
     '''Creates a combo box.'''
     
@@ -206,7 +254,9 @@ class MyComboBox(ComboBox):
         
         self.comboBox.AutoSize = False
         self.comboBox.SetClientSizeCore(dimX, dimY) 
+# endregion
 
+# region MyGroupBox
 class MyGroupBox(GroupBox):
     '''Creates a group box.'''
     
@@ -256,7 +306,9 @@ class MyGroupBox(GroupBox):
         
         self.groupBox.AutoSize = False
         self.groupBox.SetClientSizeCore(dimX, dimY) 
+# endregion
 
+# region MyLabel
 class MyLabel(Label):
     '''Creates a label.'''
 
@@ -319,7 +371,9 @@ class MyLabel(Label):
         style: The FlatStyle enum stored in flatStyle dict.  [flatStyle[Key]]'''
         
         self.label.FlatStyle = style
+# endregion
 
+# region MyRadioButton
 class MyRadioButton(RadioButton):
     '''Creates a radio button.'''
 
@@ -349,7 +403,9 @@ class MyRadioButton(RadioButton):
         
         self.radioButton.AutoSize = False
         self.radioButton.SetClientSizeCore(dimX, dimY)
+# endregion
 
+# region MyTextBox
 class MyTextBox(TextBox):
     '''Creates a text box.'''
     
@@ -425,7 +481,74 @@ class MyTextBox(TextBox):
         self.textBox.Multiline = True
         if scrollBars:
             self.textBox.ScrollBars = scrollBars
+# endregion
 
+# region MySelectButton
+class MySelectButton(Button):
+    '''Creates a button for selecting elements in Dynamo.'''
+    
+    def __init__(self, form, name, distX, distY, text, font, style=FlatStyle.Standard):
+        '''Instantiate a new button within a window.
+        
+        form: The window to which the control belongs.  [System.Windows.Forms.Form]
+        name: The name associated with this control.  [Str]
+        distX: The distance from the left edge of the window to the left edge of the control in pixels.  [Int]
+        distY: The distance from the top edge of the window to the top edge of the control in pixels.  [Int]
+        text: The text associated with this control.  [Str]
+        font: The font of the text displayed by the control.  [System.Drawing.Font]
+        style: The FlatStyle enum stored in flatStyle dict.  [flatStyle[Key]]'''
+
+        self.button = Button()
+        self.button.Name = name
+        self.button.Location = Point(distX, distY)
+        self.button.Text = text
+        self.button.Font = font
+        self.button.FlatStyle = style
+        self.button.AutoSize = True
+
+        self.button.Click += form.buttonPressed_SelectElements
+        form.Controls.Add(self.button)
+
+    def chAppearance(self, dimX, dimY, bThickness, redBound, greenBound, blueBound, redSurface, greenSurface, blueSurface):
+        '''Change the appearance of the button.
+        
+        dimX: Width of the rectangle of the button.  [Int]
+        dimY: Height of the rectangle of the button.  [Int]
+        bThickness: Border thickness in pixels.  [Int]
+        redBound: Range of brightness of Red colour bewteen 0-255 for bounds.  [Int]
+        greenBound: Range of brightness of Green colour bewteen 0-255 for bounds.  [Int]
+        blueBound: Range of brightness of Blue colour bewteen 0-255 for bounds.  [Int]
+        redSurface: Range of brightness of Red colour bewteen 0-255 for bounds.  [Int]
+        greenSurface: Range of brightness of Green colour bewteen 0-255 for bounds.  [Int]
+        blueSurface: Range of brightness of Blue colour bewteen 0-255 for bounds.  [Int]'''
+
+        self.button.AutoSize = False
+        self.button.SetClientSizeCore(dimX, dimY)
+        self.button.FlatStyle = FlatStyle.Flat
+        self.button.FlatAppearance.BorderSize = bThickness
+        self.button.FlatAppearance.BorderColor = Color.FromArgb(redBound, greenBound, blueBound)
+        self.button.FlatAppearance.MouseOverBackColor = Color.FromArgb(redSurface, greenSurface, blueSurface)
+
+    def chBackColor(self, red, green, blue):
+        '''Change the background color of the control.
+        
+        red: Range of brightness of Red colour bewteen 0-255.  [Int]
+        green: Range of brightness of Green colour bewteen 0-255.  [Int]
+        blue: Range of brightness of Blue colour bewteen 0-255.  [Int]'''
+        
+        self.button.BackColor = Color.FromArgb(red, green, blue)
+
+    def chForeColor(self, red, green, blue):
+        '''Change the color of the font of the control.
+        
+        red: Range of brightness of Red colour bewteen 0-255.  [Int]
+        green: Range of brightness of Green colour bewteen 0-255.  [Int]
+        blue: Range of brightness of Blue colour bewteen 0-255.  [Int]'''
+        
+        self.button.ForeColor = Color.FromArgb(red, green, blue)
+# endregion
+
+# region MyWindow
 class MyWindow(Form):
     def __init__(self, windowTitle, dimX, dimY):
         self.Text = windowTitle
@@ -439,8 +562,10 @@ class MyWindow(Form):
             'TextBox': {},
             'ComboBox': {},
             'CheckBox': {},
-            'RadioButton': {}
+            'RadioButton': {},
+            'SelectedElements': {}
         }
+        self.selected_elements = None  # Initialize selected elements
 
     # Método para capturar los datos de todos los controles
     def buttonPressed_CloseWindow(self, sender, args):
@@ -464,6 +589,9 @@ class MyWindow(Form):
                     if isinstance(sub_control, RadioButton):
                         self.controlInfo['RadioButton'][group_name][sub_control.Name] = sub_control.Checked
 
+        if self.selected_elements is not None:
+            self.controlInfo['SelectedElements'] = self.selected_elements
+
         self.Close()
 
     # Método para cancelar la operación
@@ -477,6 +605,7 @@ class MyWindow(Form):
             'CheckBox': {},
             'RadioButton': {}
         }
+        self.selected_elements = None  # Reset selected elements
         self.Close()
     
     # Método para agregar un botón "Aceptar" con tamaño personalizado
@@ -500,32 +629,6 @@ class MyWindow(Form):
         boton_cancelar.Click += self.buttonPressed_Cancel
         self.Controls.Add(boton_cancelar)
         return boton_cancelar
-  
-        
-    # def buttonPressed_CloseWindow(self, sender, args):
-    #     '''Handles the event when the button is pressed.'''
-        
-    #     for control in self.Controls:
-    #         if type(control) == TextBox:
-    #             self.controlInfo['TextBox'][control.Name] = control.Text
-    #         elif type(control) == ComboBox:
-    #             self.controlInfo['ComboBox'][control.Name] = control.SelectedItem
-    #         elif type(control) == CheckBox:
-    #             self.controlInfo['CheckBox'][control.Name] = control.Checked
-                
-    #         # # Capturar los datos de MyRadioButton dentro de los GroupBox
-    #         # elif isinstance(control, MyGroupBox):
-    #         #     for rb in control.groupBox.Controls:
-    #         #         if isinstance(rb, MyRadioButton):
-    #         #             self.controlInfo['RadioButton'][rb.Name] = control.Checked
-                
-    #         elif type(control) == RadioButton:
-    #             self.controlInfo['RadioButton'][control.Name] = control.Checked
-    #         # elif type(control) == GroupBox:
-    #         #     self.controlInfo['GroupBox'][control.Name] = control.Checked
-    #         else:
-    #             pass
-    #     self.Close()
 
     def addImage(self, path, dimX, dimY, distX, distY):
         '''Adds an image to the window.
@@ -563,8 +666,8 @@ class MyWindow(Form):
 
     def run(self):
         '''Shows the window.'''
-        
         Application.Run(self)
+        return self.controlInfo, self.selected_elements  # Return control info and selected elements after window closes
         
     def setIcon(self, path):
         '''Establishes an icon in the titlebar.
@@ -585,8 +688,15 @@ class MyWindow(Form):
         self.MinimumSize = Size(self.ClientSize.Width - minX, self.ClientSize.Height - minY)
         self.MaximumSize = Size(self.ClientSize.Width + maxX, self.ClientSize.Height + maxY)
 
+    def buttonPressed_SelectElements(self, sender, args):
+        '''Handles the event when the select elements button is pressed.'''
+        self.selected_elements = ui_seleccion_elementos_rectangulo(True)
+        # Handle the selected elements as needed
+        print(self.selected_elements)
+# endregion
+
 # ----------------------------------------------------------------------------- # FUNCTIONS
-# region
+# region Fuentes
 def crFont(name, size, style=FontStyle.Regular):
     '''Creates a new font.
         
@@ -597,6 +707,58 @@ def crFont(name, size, style=FontStyle.Regular):
     font = Font(FontFamily(name), size, style, GraphicsUnit.Pixel)
     return font
 # endregion
+
 # ----------------------------------------------------------------------------- # FUENTES
+# region Fuentes seleccionadas
 font_1 = crFont("Microsoft Sans Serif", 25, fontStyle['Regular'])
 font_2 = crFont("Microsoft Sans Serif", 25, fontStyle['Bold'])
+# endregion
+
+# ----------------------------------------------------------------------------- # SELECCIONAR ELEMENTOS
+# region Funciones
+def windowsform_ejecutar_y_extraer(ventana):
+	"""
+	Uso: Ejecutar la ventana y extraer la información de los controles en dos lista, una de variables y otra de valores.
+	Entrada: ventana (MyWindow) - Ventana con los controles a extraer. Nombre por defecto: win
+	Salida: Dos listas, una con las variables de los controles y otra con los valores de los inputs
+	"""
+    # Ejecutar la ventana
+	ventana.run()
+	# Extraer la información de los controles
+	inputs = ventana.controlInfo
+
+	# Devolver la información de los controles de cada uno de los diccionarios en una lista
+	variables, user_inputs = [], []
+	for key, value in inputs.items():
+		# comprobar que value es un diccionario
+		if isinstance(value, dict):
+			for k, v in value.items():
+				variables.append(k)
+				user_inputs.append(v)
+		# en el caso de que sea una lista
+		else:
+			variables.append(key)
+			user_inputs.append(value)
+	return inputs, variables, user_inputs
+
+def ui_seleccion_elementos_rectangulo(inicio):
+    """
+    Uso: Selecciona una serie de elementos por parte del usuario.
+    Entrada: [True] o mensaje de inicio para seleccionar un elemento.
+    Salida: Elemento seleccionado o mensaje de cancelación.
+    Codigo: 240924
+    Atención: se puede usar la función mensaje_inicio para mostrar un mensaje de inicio.
+    """
+    if inicio:
+        try:
+            seleccion = uidoc.Selection.PickElementsByRectangle()
+            salida = list(seleccion)
+        except:
+            salida = "Proceso cancelado"
+    else:
+        salida = "Introducir un True para seleccionar un elemento"
+
+    return salida
+
+
+# endregion
