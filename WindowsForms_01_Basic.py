@@ -51,7 +51,7 @@ sys.path.append(directorio_dynamo)
 
 
 # Importar las clases necesarias de la plantilla
-from Template import * #MyWindow, MyLabel, MyTextBox, MyCheckBox, MyComboBox, MyGroupBox, MyRadioButton, MyButton, font_1
+from Winforms_Template import * #MyWindow, MyLabel, MyTextBox, MyCheckBox, MyComboBox, MyGroupBox, MyRadioButton, MyButton, font_1
 
 # Crear la ventana principal
 # Crear la ventana principal
