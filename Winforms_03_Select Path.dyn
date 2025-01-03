@@ -1,0 +1,780 @@
+{
+  "Uuid": "dba343dc-8f0c-429c-8ef7-082ddb0443db",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "Winforms_03_Select Path",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "List": {
+        "Key": "List",
+        "Value": "BuiltIn.ds"
+      }
+    }
+  },
+  "Inputs": [
+    {
+      "Id": "5c76659b661f4e2f91677b35c4722d48",
+      "Name": "Scripts anotations:",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "- Títle: \r\nWinforms_02_Select Elements\r\n\r\n- Objetive: \r\nWindowsform example\r\n\t\t\r\n- Instructions:\t\r\nSelect elements from model and other options\r\n\r\n- Consult to: alvaro.carnicero@gmail.com\r\n\r\n- Date:\r\n241125\r\n\r\n- Revit version tested: \r\n2023 ",
+      "Description": "Crea una cadena",
+      "SelectedIndex": 0
+    }
+  ],
+  "Outputs": [
+    {
+      "Id": "0886c96c3d5f4aeab2ef1f620fbd021e",
+      "Name": "OUTPUT 2: Analisis de Resultados",
+      "Type": "unknown",
+      "InitialValue": "",
+      "Description": "Visualice la salida del nodo."
+    }
+  ],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "- Títle: \r\nWinforms_02_Select Elements\r\n\r\n- Objetive: \r\nWindowsform example\r\n\t\t\r\n- Instructions:\t\r\nSelect elements from model and other options\r\n\r\n- Consult to: alvaro.carnicero@gmail.com\r\n\r\n- Date:\r\n241125\r\n\r\n- Revit version tested: \r\n2023 ",
+      "Id": "5c76659b661f4e2f91677b35c4722d48",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1b29ff02b3a1440baebd91ba6615d328",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Crea una cadena"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "0886c96c3d5f4aeab2ef1f620fbd021e",
+      "Inputs": [
+        {
+          "Id": "9d93c455f5464a1aab873381adc244cd",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "11228a8a6eee4171b346a109dee429b6",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualice la salida del nodo."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": "C:\\Users\\alvar\\Dropbox\\0-BIM TRABAJO-CASA\\DYNAMO_PYTHON_version 2.x\\04.PROGRAMAS\\250102_Winforms_Seleccionar ruta\\Winforms_03_Select Path.py",
+      "InputValue": ".\\Winforms_03_Select Path.py",
+      "NodeType": "ExtensionNode",
+      "Id": "713ba45badb24bbeace578b513a2712e",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "4b76e971ae54440e89ba0588e09e4c7d",
+          "Name": "",
+          "Description": "Filename",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Permite seleccionar un archivo del sistema para obtener su ruta de archivo."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.Object.Type@var",
+      "Id": "fa0ff509deca4957a88ff5f58065b541",
+      "Inputs": [
+        {
+          "Id": "2247b9b95cea453da50f694cec3b1a9e",
+          "Name": "object",
+          "Description": "Objeto del que se consultará el tipo.\n\nvar",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "49527692eb6d4ea1ac7a52fc05415596",
+          "Name": "string",
+          "Description": "Tipo de objeto.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Devuelve el tipo de objeto representado como cadena.\n\nObject.Type (object: var): string"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.IO.FileSystem.ReadText@var",
+      "Id": "ad2835346d704d2090cecbb706f2d69d",
+      "Inputs": [
+        {
+          "Id": "8b027f15cc684e6e918f3c59a61cd7a8",
+          "Name": "file",
+          "Description": "Objeto de archivo desde el que se leerá texto\n\nvar",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "96f919daca3e41fb80eb86a9f2ddd38d",
+          "Name": "string",
+          "Description": "Contenido del archivo de texto.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Lee un archivo de texto y devuelve el contenido como una cadena.\n\nFileSystem.ReadText (file: var): string"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "NodeType": "ExtensionNode",
+      "Id": "3f894bed6ebb4105af57d249eb79c2a6",
+      "Inputs": [
+        {
+          "Id": "59113ab5b5bc4f00871c12b947cff0aa",
+          "Name": "",
+          "Description": "Nodo que evaluar",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4a40da6fbdd545b6aef7e772633e4db2",
+          "Name": "",
+          "Description": "Visualiza el contenido",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualice la salida del nodo."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonStringNode, PythonNodeModels",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "NodeType": "ExtensionNode",
+      "Id": "af793ac28599441797b440d6805b3f3c",
+      "Inputs": [
+        {
+          "Id": "f5147fe7a68d4d22a92fcda44cbabccd",
+          "Name": "script",
+          "Description": "Secuencia de comandos de Python que ejecutar",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e4e043a71e9249e3a9925c6471e264c9",
+          "Name": "OUT",
+          "Description": "Resultado de la secuencia de comandos de Python",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Ejecuta una secuencia de comandos de Python a partir de una cadena."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "4b76e971ae54440e89ba0588e09e4c7d",
+      "End": "8b027f15cc684e6e918f3c59a61cd7a8",
+      "Id": "125203e7b6e1490aa0ea4ffd95784ea7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "96f919daca3e41fb80eb86a9f2ddd38d",
+      "End": "f5147fe7a68d4d22a92fcda44cbabccd",
+      "Id": "ba7c5dda50544f31815e2a90f6584e46",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "e4e043a71e9249e3a9925c6471e264c9",
+      "End": "9d93c455f5464a1aab873381adc244cd",
+      "Id": "22c7e37b1d114bf5875769fdccb1d45a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "e4e043a71e9249e3a9925c6471e264c9",
+      "End": "2247b9b95cea453da50f694cec3b1a9e",
+      "Id": "370ed983d198461bb3f8eee1b28769fb",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "e4e043a71e9249e3a9925c6471e264c9",
+      "End": "59113ab5b5bc4f00871c12b947cff0aa",
+      "Id": "2a54b4b2dcc2441c8362702885ec7d7e",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Winforms_03_Select Path.py",
+      "ReferenceType": "External",
+      "Nodes": [
+        "713ba45badb24bbeace578b513a2712e"
+      ]
+    }
+  ],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.13",
+      "Data": {}
+    },
+    {
+      "ExtensionGuid": "DFBD9CC0-DB40-457A-939E-8C8555555A9D",
+      "Name": "Generative Design",
+      "Version": "2.0",
+      "Data": {}
+    }
+  ],
+  "Author": "None provided",
+  "Linting": {
+    "activeLinter": "Ninguno",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.16.4.10216",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Vista preliminar en segundo plano",
+      "EyeX": -43.591331481933594,
+      "EyeY": 53.714874267578125,
+      "EyeZ": 33.777126312255859,
+      "LookX": 22.116111755371094,
+      "LookY": -33.205375671386719,
+      "LookZ": -54.676906585693359,
+      "UpX": 0.10963166505098343,
+      "UpY": 0.95630460977554321,
+      "UpZ": -0.27103978395462036
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Name": "Scripts anotations:",
+        "ShowGeometry": true,
+        "Id": "5c76659b661f4e2f91677b35c4722d48",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 617.69051023597194,
+        "Y": 1159.1921818540845
+      },
+      {
+        "Name": "OUTPUT 2: Analisis de Resultados",
+        "ShowGeometry": false,
+        "Id": "0886c96c3d5f4aeab2ef1f620fbd021e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "X": 3670.7248517302087,
+        "Y": 1130.38760248854
+      },
+      {
+        "Name": "File Path",
+        "ShowGeometry": true,
+        "Id": "713ba45badb24bbeace578b513a2712e",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1226.6999106575947,
+        "Y": 1207.9300389731741
+      },
+      {
+        "Name": "Object.Type",
+        "ShowGeometry": true,
+        "Id": "fa0ff509deca4957a88ff5f58065b541",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2987.3366752025177,
+        "Y": 1172.236559527478
+      },
+      {
+        "Name": "FileSystem.ReadText",
+        "ShowGeometry": true,
+        "Id": "ad2835346d704d2090cecbb706f2d69d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1719.3645323182764,
+        "Y": 1209.8669150105604
+      },
+      {
+        "Name": "Watch",
+        "ShowGeometry": true,
+        "Id": "3f894bed6ebb4105af57d249eb79c2a6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2332.5804787400061,
+        "Y": 1140.7824330087262
+      },
+      {
+        "Name": "Python Script From String",
+        "ShowGeometry": true,
+        "Id": "af793ac28599441797b440d6805b3f3c",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1969.2407479833744,
+        "Y": 1210.5161402223112
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "1a499bbb7f254a1a925bd6a42e248f34",
+        "Title": "OUTPUT: A REVIT",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "cf4471d3688045279de693104b9905f9",
+          "b69a52caf6db419a900b24726d5f851a"
+        ],
+        "HasNestedGroups": false,
+        "Left": 2103.5896865674567,
+        "Top": 439.35380220322691,
+        "Width": 276.0,
+        "Height": 347.05529914592444,
+        "FontSize": 36.0,
+        "InitialTop": 554.95380220322693,
+        "InitialHeight": 269.45529914592441,
+        "TextblockHeight": 105.6,
+        "Background": "#FFFFAA45"
+      },
+      {
+        "Id": "bb0625bbf99d47b48d7b15d36ab3c108",
+        "Title": "PROCESO",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "1dd805d26cb14f5995930da01ae13536",
+          "a144e9c074a14fd3b8db00132b4ba44e"
+        ],
+        "HasNestedGroups": false,
+        "Left": 1276.816059502718,
+        "Top": 447.86489484182096,
+        "Width": 279.20000000000005,
+        "Height": 289.05529914592444,
+        "FontSize": 36.0,
+        "InitialTop": 520.26489484182093,
+        "InitialHeight": 283.45529914592441,
+        "TextblockHeight": 62.4,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "cb172bb0d32444b6a7bebbaa5894c908",
+        "Title": "INPUT",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "a19e958cd72f4b8cae6a3eb670b7b568",
+          "bc81dab04c1445889f7f66811b9d8b23"
+        ],
+        "HasNestedGroups": false,
+        "Left": 893.29963635412514,
+        "Top": 438.10001414016881,
+        "Width": 315.20000000000005,
+        "Height": 341.171506933685,
+        "FontSize": 36.0,
+        "InitialTop": 510.50001414016879,
+        "InitialHeight": 263.5715069336851,
+        "TextblockHeight": 62.4,
+        "Background": "#FF48B9FF"
+      },
+      {
+        "Id": "589f7ffc88cd4c75b80fd835bfe5eb47",
+        "Title": "Dynamo 2.x_TEMPLATE_07_230721",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "eeaa4d34c69c49a09da8b27e49eb2bd0"
+        ],
+        "HasNestedGroups": false,
+        "Left": 1236.6882719293,
+        "Top": -36.6731251932287,
+        "Width": 429.07333333333338,
+        "Height": 251.39999999999998,
+        "FontSize": 36.0,
+        "InitialTop": 78.9268748067713,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 105.6,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "7cd5e89f3619451b84f6f9f125942be5",
+        "Title": "GUIA",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "84515e3375c4489191165f7a2e5e9d08"
+        ],
+        "HasNestedGroups": false,
+        "Left": 888.59360528455545,
+        "Top": -40.908026478860492,
+        "Width": 318.40000000000009,
+        "Height": 467.40000000000003,
+        "FontSize": 48.0,
+        "InitialTop": 45.891973521139505,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 76.8,
+        "Background": "#FFE8F7AD"
+      },
+      {
+        "Id": "e3fb53ea90dc4cfd85ab399c8183741a",
+        "Title": "OUTPUT: A EXCEL",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "26966b1f798c44fa8939f1fc38cf87fa",
+          "b02f47cabc0e46d480d29c7dffc4311b"
+        ],
+        "HasNestedGroups": false,
+        "Left": 1692.235353515038,
+        "Top": 446.30291858937028,
+        "Width": 273.59999999999991,
+        "Height": 318.25529914592448,
+        "FontSize": 36.0,
+        "InitialTop": 561.9029185893703,
+        "InitialHeight": 269.45529914592441,
+        "TextblockHeight": 105.6,
+        "Background": "#FF71C6A8"
+      },
+      {
+        "Id": "011f7bfe31524818a9ec8e8bad7a7a97",
+        "Title": "INPUTS: INSTRUCCIONES",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "5c76659b661f4e2f91677b35c4722d48"
+        ],
+        "HasNestedGroups": false,
+        "Left": 607.69051023597194,
+        "Top": 1043.5921818540846,
+        "Width": 285.36333333333334,
+        "Height": 692.19999999999982,
+        "FontSize": 36.0,
+        "InitialTop": 1159.1921818540845,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 105.6,
+        "Background": "#FF48B9FF"
+      },
+      {
+        "Id": "3843850c9eeb4c9495934e614e3434ec",
+        "Title": "OUTPUTS: RESULTADOS",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "0886c96c3d5f4aeab2ef1f620fbd021e"
+        ],
+        "HasNestedGroups": false,
+        "Left": 3660.7248517302087,
+        "Top": 1014.7876024885401,
+        "Width": 343.19999999999982,
+        "Height": 263.4,
+        "FontSize": 36.0,
+        "InitialTop": 1130.38760248854,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 105.6,
+        "Background": "#FFFFAA45"
+      },
+      {
+        "Id": "cbfd9c647f7d4165b9f4b4cb8137accd",
+        "Title": "Python a traves de VS",
+        "DescriptionText": "",
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "af793ac28599441797b440d6805b3f3c",
+          "713ba45badb24bbeace578b513a2712e",
+          "fa0ff509deca4957a88ff5f58065b541",
+          "ad2835346d704d2090cecbb706f2d69d",
+          "3f894bed6ebb4105af57d249eb79c2a6"
+        ],
+        "HasNestedGroups": false,
+        "Left": 1216.6999106575947,
+        "Top": 1068.3824330087261,
+        "Width": 1982.2367645449228,
+        "Height": 286.73370721358492,
+        "FontSize": 36.0,
+        "InitialTop": 1140.7824330087262,
+        "InitialHeight": 214.73370721358492,
+        "TextblockHeight": 62.4,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "b69a52caf6db419a900b24726d5f851a",
+        "Title": "USO:\r\nGRUPOS DE CÓDIGO QUE SIRVEN PARA LA EXPORTACIÓN DE DATOS A REVIT. \r\nNORMALMENTE REPRESENTA EL FINAL DEL CÓDIGO",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": 2113.5896865674567,
+        "Top": 687.40910134915134,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "cf4471d3688045279de693104b9905f9",
+        "Title": "SALIDA DE DATOS A REVIT",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": 2119.3934133118564,
+        "Top": 562.95380220322693,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "a19e958cd72f4b8cae6a3eb670b7b568",
+        "Title": "INPUT",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": 917.62817531484279,
+        "Top": 518.50001414016879,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "bc81dab04c1445889f7f66811b9d8b23",
+        "Title": "USO:\r\nESPECIAL ATENCION POR PARTE DEL USUARIO DEL SCRIPT.\r\nSE REQUIERE LA SELECCIÓN DE OPCIONES, RUTAS DE ARCHIVOS, DATOS...\r\nEL INCORRECTO RELLENO DE LA INFORMACION PUEDE AFECTAR EL FUNCIONAMIENTO CORRECTO DEL SCRIPT.",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": 903.29963635412514,
+        "Top": 637.07152107385389,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "a144e9c074a14fd3b8db00132b4ba44e",
+        "Title": "USO:\r\nGRUPO DE CODIGO QUE FORMA PARTE DEL PROCESO.",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": 1286.816059502718,
+        "Top": 666.72019398774535,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "1dd805d26cb14f5995930da01ae13536",
+        "Title": "PROCESO",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": 1288.8468442791177,
+        "Top": 528.26489484182093,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "eeaa4d34c69c49a09da8b27e49eb2bd0",
+        "Title": "                                                                          \r\nCREADO POR: ALVARO CARNICERO\r\nCONSULTAS A: alvaro.carnicero@gmail.com\r\nCREADO: 220415\r\nULTIMA EDICION: 230721\r\n\r\nDYNAMO VERSION: <Dynamo 2.6.1.X>",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": 1246.6882719293,
+        "Top": 86.9268748067713,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "84515e3375c4489191165f7a2e5e9d08",
+        "Title": "GUIA PARA EL USUARIO DE ESTE CODIGO.\r\n\r\n1. El usuario sólo debe atender los grupos de código con descripción INPUT de color AZUL.\r\n\r\n2. Este código puede complementarse con el trabajo de otros códigos. Consulta en INFORMACION DEL CODIGO. \r\n\r\n3. El script está preparado para usar en Dynamo Player. Salvo casos advertidos previamente. \r\n\r\n4. Nunca cambiar los nodos, sus conexiones, sus nombres, descripciones, agrupaciones, etcétera.\r\n\r\n5. Consultar al creador del script para cualquier duda, mal funcionamiento, error o sugerencia.\r\n\r\n\r\nalvaro.carnicero@gmail.com\r\n\r\n\r\n\r\n",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": 898.59360528455545,
+        "Top": 53.891973521139505,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "b02f47cabc0e46d480d29c7dffc4311b",
+        "Title": "USO:\r\nGRUPOS DE CÓDIGO QUE SIRVEN PARA LA EXPORTACIÓN A EXCEL.",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": 1702.235353515038,
+        "Top": 694.35821773529472,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "26966b1f798c44fa8939f1fc38cf87fa",
+        "Title": "SALIDA DE DATOS A EXCEL",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": 1708.0390802594377,
+        "Top": 569.9029185893703,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": -1797.4727408639872,
+    "Y": -1011.0080376746367,
+    "Zoom": 1.1038421124094067
+  }
+}

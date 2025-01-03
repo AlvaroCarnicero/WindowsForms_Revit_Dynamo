@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 # PLANTILLA PYTHON para WINDOWS FORMS
-# Ultima edicion de esta plantilla 241125
+# Ultima edicion de esta plantilla 241029
 
 # region BIBLIOTECAS ___________________________________________
 #from re import T #da error, que T??? 
@@ -49,7 +49,7 @@ uidoc = uiapp.ActiveUIDocument
 
 
 from System.Drawing import Size, Color, Icon, Point, Font, FontStyle, FontFamily, GraphicsUnit, ContentAlignment
-from System.Windows.Forms import Application, Form, PictureBox, FormBorderStyle, Label, BorderStyle, FlatStyle, TextBox, HorizontalAlignment, ScrollBars, Button, ComboBox, ComboBoxStyle, CheckBox, GroupBox, RadioButton
+from System.Windows.Forms import Application, Form, PictureBox, FormBorderStyle, Label, BorderStyle, FlatStyle, TextBox, HorizontalAlignment, ScrollBars, Button, ComboBox, ComboBoxStyle, CheckBox, GroupBox, RadioButton, OpenFileDialog, DialogResult
 
 # ----------------------------------------------------------------------------- # ENUMERATORS
 # region
@@ -499,15 +499,15 @@ class MySelectButton(Button):
         style: The FlatStyle enum stored in flatStyle dict.  [flatStyle[Key]]'''
 
         self.button = Button()
-        self.button.Name = name
+        self.button.Name = name  # Usa el nombre dado al crear el botón
         self.button.Location = Point(distX, distY)
         self.button.Text = text
         self.button.Font = font
         self.button.FlatStyle = style
         self.button.AutoSize = True
 
-        self.button.Click += form.buttonPressed_SelectElements
-        form.Controls.Add(self.button)
+        self.button.Click += form.buttonPressed_SelectElements  # Asocia el evento
+        form.Controls.Add(self.button)  # Agrega el botón a la ventana
 
     def chAppearance(self, dimX, dimY, bThickness, redBound, greenBound, blueBound, redSurface, greenSurface, blueSurface):
         '''Change the appearance of the button.
@@ -548,6 +548,72 @@ class MySelectButton(Button):
         self.button.ForeColor = Color.FromArgb(red, green, blue)
 # endregion
 
+# region MyPathFile
+class MyPathFile(Button):
+    '''Creates a button for selecting path file in Dynamo.'''
+    
+    def __init__(self, form, name, distX, distY, text, font, style=FlatStyle.Standard):
+        '''Instantiate a new button within a window.
+        
+        form: The window to which the control belongs.  [System.Windows.Forms.Form]
+        name: The name associated with this control.  [Str]
+        distX: The distance from the left edge of the window to the left edge of the control in pixels.  [Int]
+        distY: The distance from the top edge of the window to the top edge of the control in pixels.  [Int]
+        text: The text associated with this control.  [Str]
+        font: The font of the text displayed by the control.  [System.Drawing.Font]
+        style: The FlatStyle enum stored in flatStyle dict.  [flatStyle[Key]]'''
+
+        self.button = Button()
+        self.button.Name = name  # Usa el nombre dado al crear el botón
+        self.button.Location = Point(distX, distY)
+        self.button.Text = text
+        self.button.Font = font
+        self.button.FlatStyle = style
+        self.button.AutoSize = True
+
+        self.button.Click += form.buttonPressed_SelectPathFile  # Asocia el evento
+        form.Controls.Add(self.button)  # Agrega el botón a la ventana
+
+    def chAppearance(self, dimX, dimY, bThickness, redBound, greenBound, blueBound, redSurface, greenSurface, blueSurface):
+        '''Change the appearance of the button.
+        
+        dimX: Width of the rectangle of the button.  [Int]
+        dimY: Height of the rectangle of the button.  [Int]
+        bThickness: Border thickness in pixels.  [Int]
+        redBound: Range of brightness of Red colour bewteen 0-255 for bounds.  [Int]
+        greenBound: Range of brightness of Green colour bewteen 0-255 for bounds.  [Int]
+        blueBound: Range of brightness of Blue colour bewteen 0-255 for bounds.  [Int]
+        redSurface: Range of brightness of Red colour bewteen 0-255 for bounds.  [Int]
+        greenSurface: Range of brightness of Green colour bewteen 0-255 for bounds.  [Int]
+        blueSurface: Range of brightness of Blue colour bewteen 0-255 for bounds.  [Int]'''
+
+        self.button.AutoSize = False
+        self.button.SetClientSizeCore(dimX, dimY)
+        self.button.FlatStyle = FlatStyle.Flat
+        self.button.FlatAppearance.BorderSize = bThickness
+        self.button.FlatAppearance.BorderColor = Color.FromArgb(redBound, greenBound, blueBound)
+        self.button.FlatAppearance.MouseOverBackColor = Color.FromArgb(redSurface, greenSurface, blueSurface)
+
+    def chBackColor(self, red, green, blue):
+        '''Change the background color of the control.
+        
+        red: Range of brightness of Red colour bewteen 0-255.  [Int]
+        green: Range of brightness of Green colour bewteen 0-255.  [Int]
+        blue: Range of brightness of Blue colour bewteen 0-255.  [Int]'''
+        
+        self.button.BackColor = Color.FromArgb(red, green, blue)
+
+    def chForeColor(self, red, green, blue):
+        '''Change the color of the font of the control.
+        
+        red: Range of brightness of Red colour bewteen 0-255.  [Int]
+        green: Range of brightness of Green colour bewteen 0-255.  [Int]
+        blue: Range of brightness of Blue colour bewteen 0-255.  [Int]'''
+        
+        self.button.ForeColor = Color.FromArgb(red, green, blue)
+# endregion
+
+
 # region MyWindow
 class MyWindow(Form):
     def __init__(self, windowTitle, dimX, dimY):
@@ -562,10 +628,8 @@ class MyWindow(Form):
             'TextBox': {},
             'ComboBox': {},
             'CheckBox': {},
-            'RadioButton': {},
-            'SelectedElements': {}
+            'RadioButton': {}
         }
-        self.selected_elements = None  # Initialize selected elements
 
     # Método para capturar los datos de todos los controles
     def buttonPressed_CloseWindow(self, sender, args):
@@ -588,10 +652,6 @@ class MyWindow(Form):
                 for sub_control in control.Controls:
                     if isinstance(sub_control, RadioButton):
                         self.controlInfo['RadioButton'][group_name][sub_control.Name] = sub_control.Checked
-
-        if self.selected_elements is not None:
-            self.controlInfo['SelectedElements'] = self.selected_elements
-
         self.Close()
 
     # Método para cancelar la operación
@@ -606,6 +666,7 @@ class MyWindow(Form):
             'RadioButton': {}
         }
         self.selected_elements = None  # Reset selected elements
+        self.selected_path_file = None  # Reset selected path file
         self.Close()
     
     # Método para agregar un botón "Aceptar" con tamaño personalizado
@@ -667,7 +728,8 @@ class MyWindow(Form):
     def run(self):
         '''Shows the window.'''
         Application.Run(self)
-        return self.controlInfo, self.selected_elements  # Return control info and selected elements after window closes
+        return self.controlInfo 
+        # Return control info and selected elements after window closes
         
     def setIcon(self, path):
         '''Establishes an icon in the titlebar.
@@ -691,8 +753,20 @@ class MyWindow(Form):
     def buttonPressed_SelectElements(self, sender, args):
         '''Handles the event when the select elements button is pressed.'''
         self.selected_elements = ui_seleccion_elementos_rectangulo(True)
-        # Handle the selected elements as needed
-        print(self.selected_elements)
+        if sender.Name:  # Usa el nombre del botón como clave
+            self.controlInfo[sender.Name] = self.selected_elements
+        
+    def buttonPressed_SelectPathFile(self, sender, args):
+        '''Handles the event when the select path file button is pressed.'''
+        dialog = OpenFileDialog()
+        dialog.Filter = "All files (*.*)|*.*"
+        dialog.Title = "Select a file"
+        result = dialog.ShowDialog()
+
+        if result == DialogResult.OK:
+            path = dialog.FileName
+            if sender.Name:  # Usa el nombre del botón como clave
+                self.controlInfo[sender.Name] = path
 # endregion
 
 # ----------------------------------------------------------------------------- # FUNCTIONS
@@ -707,7 +781,6 @@ def crFont(name, size, style=FontStyle.Regular):
     font = Font(FontFamily(name), size, style, GraphicsUnit.Pixel)
     return font
 # endregion
-
 # ----------------------------------------------------------------------------- # FUENTES
 # region Fuentes seleccionadas
 font_1 = crFont("Microsoft Sans Serif", 25, fontStyle['Regular'])
